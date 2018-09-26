@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/login/main",
+    "pages/create/main",
+    "pages/decision/main",
+    "pages/result/main",
+    "pages/back/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "#d7d7d7",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "决定决定机",
+    "navigationBarTextStyle": "black"
+  }
+}

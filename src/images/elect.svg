@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 94.457 115.418">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #4b4f56;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #4b4f58;
+        stroke-width: 2px;
+      }
+
+      .cls-3 {
+        filter: url(#矩形_121);
+      }
+
+      .cls-4 {
+        filter: url(#路径_677);
+      }
+    </style>
+    <filter id="路径_677" x="6.219" y="11.434" width="88.238" height="103.984" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="矩形_121" x="0" y="0" width="33" height="34" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="组_217" data-name="组 217" transform="translate(-1 -510)">
+    <g id="智能插座" transform="translate(-41.544 476.749)">
+      <path id="路径_673" data-name="路径 673" class="cls-1" d="M49.327,37.531V56.455H68.251V37.531Zm-2.782-1.667a1.116,1.116,0,0,1,1.116-1.116H69.918a1.116,1.116,0,0,1,1.116,1.116V58.122a1.116,1.116,0,0,1-1.116,1.116H47.66a1.116,1.116,0,0,1-1.116-1.116V35.864Z"/>
+      <path id="路径_674" data-name="路径 674" class="cls-1" d="M359.164,675.964a1.392,1.392,0,1,1,0-2.783v2.783Zm5.566-.139a1.392,1.392,0,0,0,0-2.783Z" transform="translate(-303.018 -621.457)"/>
+      <path id="路径_675" data-name="路径 675" class="cls-1" d="M329.917,239.07l-2.646,3.064,1.053.91,2.646-3.064Zm3.476.909,2.646,3.064,1.053-.91-2.646-3.064Zm-1.7,3.3v3.612h1.392v-3.612Zm-2.226,6.818v3.612h1.392V250.1Zm4.175,0v3.612h1.391V250.1Z" transform="translate(-273.321 -198.933)"/>
+    </g>
+    <g class="cls-4" transform="matrix(1, 0, 0, 1, 1, 510)">
+      <path id="路径_677-2" data-name="路径 677" class="cls-2" d="M907.245,7254.458s-2.6,103.176,68.93,82.109" transform="translate(-891 -7237)"/>
+    </g>
+    <g class="cls-3" transform="matrix(1, 0, 0, 1, 1, 510)">
+      <rect id="矩形_121-2" data-name="矩形 121" class="cls-1" width="15" height="16" rx="3" transform="translate(9 6)"/>
+    </g>
+  </g>
+</svg>

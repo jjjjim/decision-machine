@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1003 705.2">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="happy" transform="translate(-11.5 -159.2)">
+    <path id="路径_900" data-name="路径 900" class="cls-1" d="M249.2,159.2H773v75.4H249.2ZM253,789H773.1v75.4H253ZM119.2,308.7h66.9V714.5H119.2Zm720.7,0h66.9V714.5H839.9Z"/>
+    <path id="路径_901" data-name="路径 901" class="cls-1" d="M186.1,234.6H253V310H186.1ZM706.2,549.5v72H319.8v-72H253v75.4h66.8v72H706.2v-72H773V549.5ZM186.1,713.6H253V789H186.1Zm163.4-378h66.9V411H349.5Zm260.1,0h66.9V411H609.6ZM773,234.6h66.9V310H773Zm0,479h66.9V789H773ZM947.6,411h66.9v75.4H947.6Zm0,125.7h66.9v75.4H947.6ZM11.5,411H78.4v75.4H11.5Zm0,125.7H78.4v75.4H11.5Z"/>
+  </g>
+</svg>

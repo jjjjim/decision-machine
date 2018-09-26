@@ -1,0 +1,96 @@
+.custom-btn{
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  &::after{
+    border: none;
+  }
+}
+button{
+  @extend .custom-btn;
+  &[disabled]{
+    background-color: transparent;
+  }
+  &.primary{
+    background-image: url(http://ojrbqzf6q.qnssl.com/Fm2C91maCnasPDaA5JB3J9nK7xZB.svg);
+    width: 170.71px;
+    height: 65px;
+    line-height: 50px;
+    margin-top: 10px;
+    padding: 0;
+    font-size: 14px;
+    &.no-margin{
+      margin-top: 0;
+    }
+    &:active{
+      line-height: 57px;
+      background-image: url(http://ojrbqzf6q.qnssl.com/Fo_c2JwnSm-ixoWAWKRBCpjzsYey.svg);
+    }
+  }
+  &.primary-circle{
+    width: 106px;
+    height: 57px;
+    line-height: 46px;
+    padding: 0;
+    font-size: 15px;
+    background-image: url(http://ojrbqzf6q.qnssl.com/Fv5hO0CTrCxQ5SZlDSUFEQwtZLAW.svg); 
+    &:active{
+      line-height: 50px;
+      background-image: url(http://ojrbqzf6q.qnssl.com/FgRH19xwwpf-Hu5nwsamQNP9R6II.svg); 
+    } 
+  }
+  &.negative-circle{
+    width: 106px;
+    height: 57px;
+    line-height: 46px;
+    padding: 0;
+    font-size: 15px;
+    background-image: url(http://ojrbqzf6q.qnssl.com/Fo4AZi4iq_z-Ct_IgBaPF0Ji4nXB.svg); 
+    &:active{
+      line-height: 50px;
+      background-image: url(http://ojrbqzf6q.qnssl.com/FtZWPCwj2poG4eiJSWRw3_6HEqtR.svg); 
+    } 
+  }
+  &.default-circle{
+    width: 106px;
+    height: 57px;
+    line-height: 46px;
+    padding: 0;
+    font-size: 15px;
+    background-image: url(http://ojrbqzf6q.qnssl.com/Fgu-9_rDd_pacm4yoNElFmYo_jOA.svgz); 
+    &:active{
+      line-height: 50px;
+      background-image: url(http://ojrbqzf6q.qnssl.com/FkXzprC2VST_s56fC2lO_sjwXlcL.svgz); 
+    } 
+  }
+  &.small-circle{
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    background-size: contain;
+    padding: 0;
+    background-image: url(http://ojrbqzf6q.qnssl.com/Fs49igpR0vqoIrPaAbc-9aaRL2BF.svg); 
+    &:active{
+      background-image: url(http://ojrbqzf6q.qnssl.com/FiLGGq9PNN-OmGy_D7UXXjQPAoCS.svg);
+      line-height: 28px;
+    }    
+    img{
+      width: 12px;
+      height: 12px;
+    }
+    &.contact{
+      img{
+        width: 14px;
+        height: 14px;
+        transform: rotateX(25deg);
+      }
+    }
+  }
+}

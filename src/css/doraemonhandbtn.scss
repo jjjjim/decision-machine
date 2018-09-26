@@ -1,0 +1,14 @@
+.doreamon-primary{
+  display: inline-block;
+  position: relative;
+  .hand{
+    position: absolute;
+    width: 84px;
+    height: 143px;
+    left: 40%;
+    top: -20px;
+    opacity: 0;
+    transform-origin: center 30px;
+    transform: translateY(63px);
+  }
+}
