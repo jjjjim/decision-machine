@@ -28,5 +28,8 @@ export default {
   },
   setText (state, val) {
     state.text = val
+  },
+  setInIndex (state, val) {
+    state.inIndex = val
   }
 }

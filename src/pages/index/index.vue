@@ -50,6 +50,8 @@
             </p>
           </li>
         </ul>
+        <shake>
+        </shake>
       </div>
       <div slot="operate">
         <button class="primary init-btn" size="mini" type="plain"  @click.stop="onInit">
@@ -63,6 +65,7 @@
 import machine from '@/components/machine'
 import decisionitems from '@/components/decision_items'
 import hostresult from '@/components/host_result'
+import shake from '@/components/shake'
 export default {
   data () {
     return {
@@ -77,9 +80,16 @@ export default {
     this.setNavigationBar()
     // this.getUserInfo()
     this.getDecisionList()
+    this.$store.commit('setInIndex', true)
+    this.intiGetRandomDecision()
   },
   onShow () {
+    this.$store.commit('setInIndex', true)
     this.getDecisionList()
+  },
+  onHide () {
+    // wx.stopAccelerometer()
+    this.$store.commit('setInIndex', false)
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -94,7 +104,8 @@ export default {
   components: {
     machine,
     decisionitems,
-    hostresult
+    hostresult,
+    shake
   },
   computed: {
     isShowDecisionList () {
@@ -173,6 +184,38 @@ export default {
           }
         )
       }
+    },
+    intiGetRandomDecision () {
+      wx.onAccelerometerChange(e => {
+        const inIndex = this.$store.state.inIndex
+        if (!inIndex || this.isBusy) {
+          return
+        }
+        if (e.x > 1 && e.y > 1) {
+          this.isBusy = true
+          this.$store.commit('setGlobalModal', {show: true, type: {name: 'random'}})
+          this.$http.post('get_public', {open_id: this.openid}).then(
+            res => {
+              const randomDecision = res.data && res.data.result
+              this.$store.commit('setGlobalModal')
+              if (randomDecision.id && randomDecision.state === 1) {
+                wx.redirectTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
+              } else {
+                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
+              }
+            },
+            error => {
+              if (error) {
+                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
+              }
+            }
+          ).then(
+            () => {
+              this.isBusy = false
+            }
+          )
+        }
+      })
     }
   }
 }

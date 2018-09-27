@@ -28,7 +28,6 @@
     },
     methods: {
       previousOne () {
-        console.log(111)
         this.$emit('switch', -1)
       },
       nextOne () {

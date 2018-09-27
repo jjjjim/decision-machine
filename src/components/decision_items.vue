@@ -6,14 +6,18 @@
         </item>
       </li>
     </ul>
+    <shake>
+    </shake>
   </scroll-view>
 </template>
 <script>
   import item from '@/components/decision_item'
+  import shake from '@/components/shake'
   export default {
     props: ['items'],
     components: {
-      item
+      item,
+      shake
     },
     methods: {
       delayScreenSaver () {

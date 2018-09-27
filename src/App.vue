@@ -3,6 +3,10 @@ export default {
   created () {
     this.getUserInfo()
     this.getText()
+    wx.startAccelerometer({
+      interval: 'ui'
+    })
+    // this.getRandomDecision()
   },
   methods: {
     getUserInfo () {
@@ -28,6 +32,27 @@ export default {
           }
         }
       )
+    },
+    getRandomDecision () {
+      wx.startAccelerometer({
+        interval: 'ui'
+      })
+      wx.onAccelerometerChange(e => {
+        if (e.x > 1 && e.y > 1) {
+          this.$store.commit('setGlobalModal', {show: true, type: {name: 'random'}})
+          this.$http.post('get_public').then(
+            res => {
+              const randomDecision = res.data && res.data.result
+              this.$store.commit('setGlobalModal')
+              if (randomDecision.id && randomDecision.state === 1) {
+                wx.navigateTo({url: `/pages/decision/main?id=${randomDecision.id}`})
+              } else {
+                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
+              }
+            }
+          )
+        }
+      })
     }
   }
 }

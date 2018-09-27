@@ -19,8 +19,8 @@
 <script>
 import machine from '@/components/machine'
 import decision from '@/components/decision'
-import shareImgTemplate from '@/images/share-img.png'
-import border from '@/images/border.png'
+import shareImgTemplate from '@/images/share-img2.png'
+import border from '@/images/border2.png'
 import decisionbtngroup from '@/components/decision_btn_group'
 /* eslint-disable-next-line */
 const regeneratorRuntime = require('../../../static/regenerator-runtime/runtime.js')
@@ -35,7 +35,8 @@ export default {
       border,
       openid: '',
       participated: false,
-      isShowBackHome: false
+      isShowBackHome: false,
+      fromShake: false // 从摇一摇进入
     }
   },
   onLoad (options) {
@@ -43,6 +44,7 @@ export default {
     let id = Number(scene) > 0 ? scene : this.$root.$mp.query.id
     this.id = id
     this.isShowBackHome = this.$root.$mp.query.home
+    this.fromShake = this.$root.$mp.query.shake
     this.openid = wx.getStorageSync('openid')
     this.init()
   },
@@ -51,6 +53,9 @@ export default {
   },
   onShow () {
     this.init()
+  },
+  onUnload () {
+    this.$store.commit('setInIndex', false)
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -87,6 +92,9 @@ export default {
   methods: {
     async init () {
       if (this.openid) {
+        if (this.fromShake) {
+          this.$store.commit('setInIndex', true)
+        }
         this.getDetail()
         return
       }
@@ -231,7 +239,6 @@ export default {
           }
         },
         error => {
-          console.log(error)
           if (error) {
             this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取数据出错，请再试一次(5012)。'}})
           }
@@ -278,7 +285,7 @@ export default {
         {
           type: 'text',
           content: this.decisionDetail.question,
-          color: '#ffffff',
+          color: '#403c39',
           top: 158,
           left: 46,
           width: 263,

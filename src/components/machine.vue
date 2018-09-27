@@ -30,8 +30,15 @@
               </p>
             </section>
           </div>
+          <div class="get-random-decision" v-if="isShowGetRandomDecison">
+            <section>
+              <img :src="loadingImg" alt="loading">
+              <p>
+                正在随机获取已公开的决定...
+              </p>              
+            </section>
+          </div>
           <div class="screen-saver" :style="wallPaper" v-if="isShowScreenSaver">
-
           </div>
           <div class="how-to-use" v-if="isShowHowToUseModal">
             <p>
@@ -135,6 +142,9 @@
       isMachineWorking () {
         return this.$store.state.globalModalConfig.type.name === 'working'
       },
+      isShowGetRandomDecison () {
+        return this.$store.state.globalModalConfig.type.name === 'random'
+      },
       errorMsg () {
         if (this.isShowErrorMsgModal) {
           return this.$store.state.globalModalConfig.type.content
@@ -225,6 +235,11 @@
     transform: rotate(360deg);
   }
 }
+.loadingicon{
+  width: 23px;
+  height: 23px;
+  animation: loading 1.2s linear infinite;
+}
 .machine-template{
   height: 100vh;
   display: flex;
@@ -314,15 +329,23 @@
       padding-top: 50px;
       & > section{
         img{
-          width: 23px;
-          height: 23px;
-          animation: loading 1.2s linear infinite;
+          @extend .loadingicon;
         }
         p{
           margin-top: 15px;
           font-size: 15px;
         }
       }
+    }
+    .get-random-decision{
+        padding-top: 50px;
+        img{
+          @extend .loadingicon;
+        }
+        p{
+          margin-top: 20px;
+          font-size: 15px;
+        }
     }
     .screen-saver{
       height: 100%;

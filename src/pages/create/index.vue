@@ -3,8 +3,10 @@
     <machine>
       <div slot="screen">
         <div class="create">
-          <section>
+          <section class="inner">
             <textarea focus @input="delayScreenSaver" v-model.trim="decisionContent" placeholder="我今晚要不要喝醉？" placeholder-style="color: #7b8190;font-size: 15px;" maxlength="80" auto-height></textarea>
+            <ispublic :isPublic="isPublic" v-on:switchIsPublic="setPublic">
+            </ispublic>
           </section>
         </div>
       </div>
@@ -19,6 +21,7 @@
 
 <script>
 import machine from '@/components/machine'
+import ispublic from '@/components/ispublic_panel'
 export default {
   mounted () {
     this.loopCancelSaver()
@@ -28,11 +31,13 @@ export default {
       wether: '',
       decisionContent: '',
       clocks: [],
-      loopClock: null
+      loopClock: null,
+      isPublic: true
     }
   },
   components: {
-    machine
+    machine,
+    ispublic
   },
   computed: {
     openid () {
@@ -50,17 +55,22 @@ export default {
     this.loopClock = null
   },
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+    setPublic () {
+      this.isPublic = !this.isPublic
     },
     toLaunchDecision () {
       if (!this.user) {
         wx.reLaunch({url: '../login/main'})
         return
       }
-      if (!this.decisionContent) {
-        this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '你还没有输入决定内容'}})
+      if (this.decisionContent.length < 5) {
+        let msg = ''
+        if (!this.decisionContent) {
+          msg = '你还没有输入任何决定内容'
+        } else {
+          msg = '决定内容太短，请至少输入5个字符。'
+        }
+        this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: msg}})
         return
       }
       // const reminded = wx.getStorageSync('createreminded')
@@ -85,7 +95,7 @@ export default {
     launchDecision () {
       const question = this.decisionContent
       this.$store.commit('setGlobalModal', {show: true, type: {name: 'loading', content: '正在发起协议...'}})
-      this.$http.post('create_choice', {open_id: this.openid, question}).then(
+      this.$http.post('create_choice', {open_id: this.openid, question, public: this.isPublic ? 1 : 0}).then(
         res => {
           //
           const id = res.data && res.data.id
@@ -135,8 +145,12 @@ export default {
 .container{
   .create{
     text-align: left;
-    .weather{
-      margin: 5px 0;
+    height: 100%;
+    & > .inner{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     textarea{
       width: 100%;
