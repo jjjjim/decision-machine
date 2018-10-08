@@ -330,7 +330,7 @@ export default {
         },
         {
           type: 'image',
-          url: `https://m.niucodata.com/pic.php?pic=${this.user.avatarUrl}`,
+          url: `https://m.niucodata.com/pic.php?pic=${this.decisionDetail.creator_avatar}`,
           top: 60,
           left: 148,
           width: 79,
