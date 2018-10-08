@@ -1,8 +1,5 @@
 <template>
   <div class="decision-result" v-if="showResult">
-    <!-- <p class="state">
-      {{ state }}，{{resultText}}
-    </p> -->
     <div class="state">
       <span class="text against">
         反对方
@@ -11,9 +8,6 @@
         <span class="count">
           {{ negativeResult.length }}          
         </span>
-        <!-- <span class="icon">
-          VS
-        </span> -->
         <img src="http://ojrbqzf6q.qnssl.com/FqGFl4pu_WB3OQTJz-1dZwisUPcX.svgz" alt="VS" class="icon">
         <span class="count">
           {{ positiveResult.length }}

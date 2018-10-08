@@ -1,12 +1,22 @@
 <script>
 export default {
+  data () {
+    return {
+      isBusy: false
+    }
+  },
   created () {
     this.getUserInfo()
     this.getText()
     wx.startAccelerometer({
       interval: 'ui'
     })
-    // this.getRandomDecision()
+    this.getRandomDecision()
+  },
+  computed: {
+    openid () {
+      return this.$store.state.openid
+    }
   },
   methods: {
     getUserInfo () {
@@ -34,21 +44,37 @@ export default {
       )
     },
     getRandomDecision () {
-      wx.startAccelerometer({
-        interval: 'ui'
-      })
       wx.onAccelerometerChange(e => {
-        if (e.x > 1 && e.y > 1) {
+        const inIndex = this.$store.state.inIndex
+        const inDecision = this.$store.state.inDecision
+        const isShakeAvaliable = (inIndex || inDecision) && !this.isBusy
+        if (isShakeAvaliable && e.x > 1 && e.y > 1) {
+          this.isBusy = true
           this.$store.commit('setGlobalModal', {show: true, type: {name: 'random'}})
-          this.$http.post('get_public').then(
+          this.$http.post('get_public', {open_id: this.openid}).then(
             res => {
               const randomDecision = res.data && res.data.result
+              /* eslint-disable */
               this.$store.commit('setGlobalModal')
               if (randomDecision.id && randomDecision.state === 1) {
-                wx.navigateTo({url: `/pages/decision/main?id=${randomDecision.id}`})
+                if (inIndex) {
+                  wx.navigateTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
+                } else if (inDecision) {
+                  this.$store.commit('updateRandomId', randomDecision.id)
+                }
+                // wx.redirectTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
               } else {
                 this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
               }
+            },
+            error => {
+              if (error) {
+                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
+              }
+            }
+          ).then(
+            () => {
+              this.isBusy = false
             }
           )
         }

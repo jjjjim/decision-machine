@@ -1,64 +1,5 @@
 <template>
   <div class="container" :class='isFresh ? "fresh" : "old"'>
-    <!-- <machine v-if="decisionLength">
-      <div slot="screen">
-        <decisionitems :items="decisionList">
-        </decisionitems>
-      </div>
-      <div slot="operate">
-        <button class="primary no-margin" size="mini" type="plain"  @click.stop="onInit">
-          新的决定
-        </button>
-        <div class="about">
-          <button class="small-circle about contact" size="mini" type="plain" open-type="contact">
-            <img src="http://ojrbqzf6q.qnssl.com/Fiw0hfRnmwC0rczg03FlcG_Ws-h3.svgz" alt="home">
-          </button>
-        </div>
-      </div>
-    </machine>
-    <machine v-else>
-      <div slot="screen">
-        <ul class="welcome-introduce">
-          <li>
-            <p>
-              我今天晚上要不要去吃夜宵？
-            </p>
-          </li>
-          <li>
-            <p>
-              我该不该买那台价值不菲的电脑？
-            </p>
-          </li>
-          <li>
-            <p>
-              我要不要鼓起勇气跟TA表白？
-            </p>
-          </li>
-          <li>
-            <p class="more">
-              ……
-            </p>
-          </li>
-          <li>
-            <p>
-              求助好友，帮你下定决心，作出决定。
-            </p>
-          </li>
-          <li>
-            <p>
-              这，就是我存在的意义。
-            </p>
-          </li>
-        </ul>
-        <shake>
-        </shake>
-      </div>
-      <div slot="operate">
-        <button class="primary init-btn" size="mini" type="plain"  @click.stop="onInit">
-          开始使用
-        </button>
-      </div>
-    </machine> -->
     <machine>
       <div slot="screen">
         <indexcontent :decisionList="decisionList">
@@ -88,16 +29,18 @@ export default {
   mounted () {
     this.isFresh = !wx.getStorageSync('openid')
     this.setNavigationBar()
-    // this.getDecisionList()
-    this.$store.commit('setInIndex', true)
-    this.intiGetRandomDecision()
-  },
-  onShow () {
     this.$store.commit('setInIndex', true)
     this.getDecisionList()
   },
+  onShow () {
+    this.$store.commit('setInIndex', true)
+    // this.getDecisionList()
+  },
   onHide () {
     this.$store.commit('setInIndex', false)
+  },
+  onPullDownRefresh () {
+    this.getDecisionList()
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -179,40 +122,12 @@ export default {
               this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取列表出错'}})
             }
           }
+        ).then(
+          () => {
+            wx.stopPullDownRefresh()
+          }
         )
       }
-    },
-    intiGetRandomDecision () {
-      wx.onAccelerometerChange(e => {
-        const inIndex = this.$store.state.inIndex
-        if (!inIndex || this.isBusy) {
-          return
-        }
-        if (e.x > 1 && e.y > 1) {
-          this.isBusy = true
-          this.$store.commit('setGlobalModal', {show: true, type: {name: 'random'}})
-          this.$http.post('get_public', {open_id: this.openid}).then(
-            res => {
-              const randomDecision = res.data && res.data.result
-              this.$store.commit('setGlobalModal')
-              if (randomDecision.id && randomDecision.state === 1) {
-                wx.redirectTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
-              } else {
-                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
-              }
-            },
-            error => {
-              if (error) {
-                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
-              }
-            }
-          ).then(
-            () => {
-              this.isBusy = false
-            }
-          )
-        }
-      })
     }
   }
 }

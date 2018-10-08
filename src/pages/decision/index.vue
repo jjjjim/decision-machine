@@ -60,11 +60,11 @@ export default {
     this.loopGetDetail()
   },
   onUnload () {
-    this.$store.commit('setInIndex', false)
-    for (let key of this.clockArray) {
-      clearInterval(key)
-    }
-    this.clockArray = []
+    this.$store.commit('setInDecision', false)
+    this.destroyLoop()
+  },
+  onHide () {
+    this.destroyLoop()
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -96,13 +96,23 @@ export default {
     },
     avaliable () {
       return this.decisionDetail.state && this.decisionDetail.state !== 0
+    },
+    randomId () {
+      const id = this.$store.state.currentRandomId
+      if (id > 0) {
+        this.$root.$mp.query.id = id
+        this.id = id
+        this.getDetail()
+      }
+      return id
     }
   },
   methods: {
     async init () {
+      this.participated = false
       if (this.openid) {
         if (this.fromShake) {
-          this.$store.commit('setInIndex', true)
+          this.$store.commit('setInDecision', true)
         }
         this.getDetail()
         return
@@ -239,7 +249,6 @@ export default {
         open_id: this.openid,
         q_id: this.id
       }
-      this.participated = false
       if (this.isShowLoading) {
         this.$store.commit('setGlobalModal', {show: true, type: {name: 'loading', content: '获取详情...'}})
       }
@@ -285,6 +294,13 @@ export default {
     showModal (type) {
       this.$store.commit('setGlobalModal', {show: true, type: {name: type}})
     },
+    destroyLoop () {
+      for (let key of this.clockArray) {
+        clearInterval(key)
+      }
+      this.clockArray = []
+      this.$store.commit('updateRandomId', -1)
+    },
     eventDraw () {
       if (this.shareImage) {
         this.eventSave()
@@ -322,7 +338,7 @@ export default {
         },
         {
           type: 'image',
-          url: this.border,
+          url: `https://m.niucodata.com/pic.php?pic=http://pfdn803m2.bkt.clouddn.com/FsgArcagKVeold2BWGnT4K9yMcOH.png`,
           top: 60,
           left: 148,
           width: 80,

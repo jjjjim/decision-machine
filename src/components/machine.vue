@@ -1,8 +1,5 @@
 <template>
   <section class="machine-template">
-    <!-- <section class="light">
-      <img :src="lightImg" alt="light">
-    </section> -->
     <section class="machine" :animation="machineAnimation" v-if="!isShowMachineBehind">
       <img :src="machine" alt="machine" class="show-machine-aniamtion device" @longpress="showBack">
       <section class="top-bar">

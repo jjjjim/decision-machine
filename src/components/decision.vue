@@ -3,7 +3,7 @@
     <section class="content-zone">
       <decisioncontent :detail="detail" :createTime="createTime" :stateImg="stateImg" :avaliable="avaliable" v-if="createTime">
       </decisioncontent>
-      <div class="timeout" v-if="!avaliable && !isHost && !participated">
+      <div class="timeout" v-if="1 === 3 && !avaliable && !isHost && !participated">
         <div class="header">
           <img src="http://ojrbqzf6q.qnssl.com/Fta9bluMYJtPPHxR9dCWibc-s8Jd.svg" alt="timeout" class="timeout-icon">
           <p class="title">

@@ -69,7 +69,7 @@ export default {
       if (this.decisionContent.length < 5) {
         let msg = ''
         if (!this.decisionContent) {
-          msg = '你还没有输入任何决定内容'
+          msg = '你还没有输入决定内容'
         } else {
           msg = '决定内容太短，请至少输入5个字符。'
         }

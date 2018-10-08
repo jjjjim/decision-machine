@@ -38,6 +38,9 @@ export default {
   setInIndex (state, val) {
     state.inIndex = val
   },
+  setInDecision (state, val) {
+    state.inDecision = val
+  },
   saveFormId (state, e) {
     const id = e.mp.detail.formId
     if (!isNaN(id)) {
@@ -46,5 +49,8 @@ export default {
         }
       )
     }
+  },
+  updateRandomId (state, id) {
+    state.currentRandomId = id
   }
 }

@@ -9,7 +9,7 @@
           是否匿名
         </p>
         <p class="more-hint">
-          {{ isPublic ? "以匿名身份发起此决定" :  "你的头像和昵称会公开" }}
+          {{ isPublic ? "以匿名身份发起此决定" :  "参与者会看到你的头像和昵称" }}
         </p>
       </section>
     </section>
