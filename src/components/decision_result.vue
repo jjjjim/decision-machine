@@ -30,7 +30,7 @@
     <ul class="members">
       <li>
         <ul class="avatars with-name" v-if="negativeResult.length <= 5">
-          <li v-for="(item, index) in negativeResult" :key="index" class="ellipsis">
+          <li v-for="(item, index) in negativeResult" :key="index" class="ellipsis" v-if="item">
             <img class="avatar" :src="item.avatar" alt="avatar">
             <span>
               {{ item.name }}
@@ -38,7 +38,7 @@
           </li>
         </ul>
         <ul class="avatars no-name" v-else>
-          <li v-for="(item, index) in negativeResult" :key="index" class="ellipsis">
+          <li v-for="(item, index) in negativeResult" :key="index" class="ellipsis" v-if="item">
             <img class="avatar" :src="item.avatar" alt="avatar">
           </li>
         </ul>
@@ -63,7 +63,7 @@
 </template>
 <script>
   export default {
-    props: ['decisionDetail', ''],
+    props: ['decisionDetail'],
     computed: {
       positiveResult () {
         return (this.decisionDetail.yes) || []

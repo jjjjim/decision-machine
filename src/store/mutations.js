@@ -1,3 +1,9 @@
+const Fly = require('../utils/fly.min.js')
+const fly = new Fly()
+fly.config.headers = {
+  'content-type': 'application/json'
+}
+fly.config.baseURL = 'https://s.niucodata.com/api2/'
 export default {
   setUserInfo (state, val) {
     state.user = val
@@ -31,5 +37,14 @@ export default {
   },
   setInIndex (state, val) {
     state.inIndex = val
+  },
+  saveFormId (state, e) {
+    const id = e.mp.detail.formId
+    if (!isNaN(id)) {
+      fly.post('save_formId', {open_id: state.openid, form_id: id}).then(
+        res => {
+        }
+      )
+    }
   }
 }

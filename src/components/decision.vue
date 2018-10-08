@@ -1,27 +1,8 @@
 <template>
   <scroll-view scroll-y class="decision detail" @scroll="delayScreenSaver">
     <section class="content-zone">
-      <div class="author">
-        <div class="launch-info">
-          <img class="avatar" :src="detail.creator_avatar" alt="avatar">
-          <div class="info ellipsis">
-            <p class="nickname ellipsis">
-              {{ detail.creator_name }}
-            </p>
-            <div class="time" v-if="detail.add_time">
-              <span>
-                {{ createTime }}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="state">
-          <img :src="stateImg" alt="state">
-        </div>
-      </div>
-      <p class="content" :class='avaliable ? "" : "disable"'>
-        {{ detail.question }}
-      </p>
+      <decisioncontent :detail="detail" :createTime="createTime" :stateImg="stateImg" :avaliable="avaliable" v-if="createTime">
+      </decisioncontent>
       <div class="timeout" v-if="!avaliable && !isHost && !participated">
         <div class="header">
           <img src="http://ojrbqzf6q.qnssl.com/Fta9bluMYJtPPHxR9dCWibc-s8Jd.svg" alt="timeout" class="timeout-icon">
@@ -52,7 +33,8 @@
   </scroll-view>
 </template>
 <script>
-  import result from '@/components/result'
+  import decisioncontent from '@/components/decision_content'
+  import result from '@/components/decision_result'
   import endImg from '@/images/decisionend.svg'
   import avaliableImg from '@/images/decisionavaliable.svg'
   export default {
@@ -93,6 +75,7 @@
       }
     },
     components: {
+      decisioncontent,
       result
     },
     methods: {

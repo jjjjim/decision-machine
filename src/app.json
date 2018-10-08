@@ -4,7 +4,6 @@
     "pages/login/main",
     "pages/create/main",
     "pages/decision/main",
-    "pages/result/main",
     "pages/back/main"
   ],
   "window": {

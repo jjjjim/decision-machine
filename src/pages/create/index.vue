@@ -11,9 +11,11 @@
         </div>
       </div>
       <div slot="operate">
-        <button class="primary init-btn" size="mini" type="plain" @click.stop="toLaunchDecision">
-          确认发起
-        </button>
+        <form @submit="toLaunchDecision" report-submit>
+          <button formType="submit" class="primary init-btn" size="mini" type="plain">
+            确认发起
+          </button>
+        </form>
       </div>
     </machine>
   </div>
@@ -32,7 +34,7 @@ export default {
       decisionContent: '',
       clocks: [],
       loopClock: null,
-      isPublic: true
+      isPublic: false
     }
   },
   components: {
@@ -58,7 +60,8 @@ export default {
     setPublic () {
       this.isPublic = !this.isPublic
     },
-    toLaunchDecision () {
+    toLaunchDecision (e) {
+      this.$store.commit('saveFormId', e)
       if (!this.user) {
         wx.reLaunch({url: '../login/main'})
         return
@@ -95,7 +98,7 @@ export default {
     launchDecision () {
       const question = this.decisionContent
       this.$store.commit('setGlobalModal', {show: true, type: {name: 'loading', content: '正在发起协议...'}})
-      this.$http.post('create_choice', {open_id: this.openid, question, public: this.isPublic ? 1 : 0}).then(
+      this.$http.post('create_choice', {open_id: this.openid, question, public: this.isPublic ? 0 : 1}).then(
         res => {
           //
           const id = res.data && res.data.id

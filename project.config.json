@@ -42,13 +42,13 @@
 					"id": 1,
 					"name": "详情",
 					"pathName": "pages/decision/main",
-					"query": "id=591&home=true"
+					"query": "id=754&home=true"
 				},
 				{
 					"id": 2,
 					"name": "结果",
 					"pathName": "pages/result/main",
-					"query": "id=76"
+					"query": "id=752"
 				},
 				{
 					"id": -1,

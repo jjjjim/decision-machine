@@ -40,6 +40,19 @@
           </div>
           <div class="screen-saver" :style="wallPaper" v-if="isShowScreenSaver">
           </div>
+          <div class="shake-hint" v-if="isShowCanShake">
+            <div>
+              <section class="wrapper">
+                <img src="http://ojrbqzf6q.qnssl.com/FoJiyZfqYSCWBx5rR8Ys-5Ydxv0x.svgz" alt="shake">
+              </section>
+              <p class="title">
+                摇一摇
+              </p>
+              <p class="value">
+                看看别人在纠结什么决定
+              </p>
+            </div>
+          </div>
           <div class="how-to-use" v-if="isShowHowToUseModal">
             <p>
               总有那么些艰难的决定让我们犹豫不决，心乱如麻。使用这台机器，快速征集好友的看法。
@@ -72,11 +85,13 @@
           </div>
         </section>
         <section class="operate" @click.stop>
-          <button class="primary" @click.stop="closeModal">
-            <span>
-              {{ modalCloseBtnText }}
-            </span>
-          </button>
+          <form @submit="closeModal" report-submit>
+            <button formType="submit" class="primary">
+              <span>
+                {{ modalCloseBtnText }}
+              </span>
+            </button>
+          </form>
         </section>
       </block>
       <block v-else>
@@ -85,9 +100,8 @@
           </slot>
         </section>
         <section class="operate" @click.stop>
-          <slot name="operate">
-
-          </slot>
+           <slot name="operate">
+            </slot>
         </section>
       </block>
     </section>
@@ -142,6 +156,9 @@
       isMachineWorking () {
         return this.$store.state.globalModalConfig.type.name === 'working'
       },
+      isShowCanShake () {
+        return this.$store.state.globalModalConfig.type.name === 'shakeHint'
+      },
       isShowGetRandomDecison () {
         return this.$store.state.globalModalConfig.type.name === 'random'
       },
@@ -180,7 +197,8 @@
       backHome () {
         wx.reLaunch({url: '../index/main'})
       },
-      closeModal () {
+      closeModal (e) {
+        this.$store.commit('saveFormId', e)
         if (!this.isShowLoadingModal) {
           this.$store.commit('setGlobalModal')
           this.denyAuthorize = false
@@ -353,6 +371,37 @@
       background-position: center;
       background-repeat: no-repeat;
       animation: btn .5s;
+    }
+    .shake-hint{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      & > div{
+        width: 100%;
+      }
+      .wrapper{
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border-radius: 50%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        img{
+          width: 60px;
+          height: 60px;
+        }
+      }
+      .title{
+        margin-top: 30px;
+        font-size: 20px;
+      }
+      .value{
+        font-size: 15px;
+        opacity: 0.6;
+      }
     }
     .share-as-img{
       text-align: left;

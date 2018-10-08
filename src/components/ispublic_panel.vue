@@ -6,10 +6,10 @@
       </section>
       <section class="text">
         <p class="title">
-          是否公开此决定
+          是否匿名
         </p>
         <p class="more-hint">
-          {{ isPublic ? "任何用户都可以看到并参与这个决定" : "您需要手动将此决定分享给好友" }}
+          {{ isPublic ? "以匿名身份发起此决定" :  "你的头像和昵称会公开" }}
         </p>
       </section>
     </section>

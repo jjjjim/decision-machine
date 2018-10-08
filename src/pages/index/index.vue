@@ -1,6 +1,6 @@
 <template>
   <div class="container" :class='isFresh ? "fresh" : "old"'>
-    <machine v-if="decisionLength">
+    <!-- <machine v-if="decisionLength">
       <div slot="screen">
         <decisionitems :items="decisionList">
         </decisionitems>
@@ -55,16 +55,26 @@
       </div>
       <div slot="operate">
         <button class="primary init-btn" size="mini" type="plain"  @click.stop="onInit">
-          发起决定
+          开始使用
         </button>
+      </div>
+    </machine> -->
+    <machine>
+      <div slot="screen">
+        <indexcontent :decisionList="decisionList">
+        </indexcontent>
+      </div>
+      <div slot="operate">
+        <indexbtn :decisionList="decisionList">
+        </indexbtn>
       </div>
     </machine>
   </div>
 </template>
 <script>
 import machine from '@/components/machine'
-import decisionitems from '@/components/decision_items'
-import hostresult from '@/components/host_result'
+import indexcontent from '@/components/index_page'
+import indexbtn from '@/components/index_btn_group'
 import shake from '@/components/shake'
 export default {
   data () {
@@ -78,8 +88,7 @@ export default {
   mounted () {
     this.isFresh = !wx.getStorageSync('openid')
     this.setNavigationBar()
-    // this.getUserInfo()
-    this.getDecisionList()
+    // this.getDecisionList()
     this.$store.commit('setInIndex', true)
     this.intiGetRandomDecision()
   },
@@ -88,7 +97,6 @@ export default {
     this.getDecisionList()
   },
   onHide () {
-    // wx.stopAccelerometer()
     this.$store.commit('setInIndex', false)
   },
   onShareAppMessage: function (res) {
@@ -103,8 +111,8 @@ export default {
   },
   components: {
     machine,
-    decisionitems,
-    hostresult,
+    indexcontent,
+    indexbtn,
     shake
   },
   computed: {
@@ -116,9 +124,6 @@ export default {
     },
     user () {
       return this.$store.state.user
-    },
-    logined () {
-      return this.openid && this.user
     },
     currentDecision () {
       return this.decisionList[this.currentIndex] || {}
@@ -147,14 +152,6 @@ export default {
             }
           })
         }, 8000)
-      }
-    },
-    onInit () {
-      if (this.logined) {
-        const url = '../create/main'
-        wx.navigateTo({ url })
-      } else {
-        wx.reLaunch({url: '../login/main'})
       }
     },
     getUserInfo () {
@@ -272,53 +269,15 @@ export default {
     animation: back 2s ease-in forwards;
     animation-delay: 8s;
     .show-machine-aniamtion{
-      // opacity: 0;
-      // animation: machine 2s forwards;
       animation-delay: 8s;
     }
-    .welcome-introduce{
-      li{
-        opacity: 0;
-        animation: breath .8s forwards;
-      }
+    .shake-get-random-decision{
+      transform: scaleY(0);
+      animation: breath .8s forwards;
+      animation-delay: 10s;    
     }
     .init-btn{
       animation-delay: 10s;
-    }
-  }
-}
-.machine{
-  .welcome-introduce{
-    font-size: 16px;
-    text-align: left;
-    font-family: 'fuck';
-    li{
-      line-height: normal;
-      transform-origin: center;
-      &:not(:last-child){
-        margin-bottom: 10px;
-      }
-      .more{
-        text-align: center;
-      }
-      &:first-child{
-        animation-delay: 1.4s;
-      }
-      &:nth-child(2){
-        animation-delay: 2.8s;
-      }
-      &:nth-child(3){
-        animation-delay: 4.2s;
-      }
-      &:nth-child(4){
-        animation-delay: 5.6s;
-      }
-      &:nth-child(5){
-        animation-delay: 7s;
-      }
-      &:nth-child(6){
-        animation-delay: 8.4s;
-      }
     }
   }
 }

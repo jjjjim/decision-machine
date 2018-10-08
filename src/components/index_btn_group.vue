@@ -1,20 +1,47 @@
 <template>
-  <section class="btn-group index-btn-group">
-    <primarybtn v-on:emitMethod="onInit">
-    </primarybtn>
-  </section>
+  <block>
+    <block v-if="decisionList.length">
+      <form @submit="onInit" report-submit>
+        <button formType="submit" class="primary init-btn" size="mini" type="plain">
+          新的决定
+        </button>
+      </form>
+    </block>
+    <block v-else>
+      <form @submit="onInit" report-submit v-if="!hasOpenid">
+        <button formType="submit" class="primary init-btn" size="mini" type="plain">
+          开始使用
+        </button>
+      </form>
+      <block v-else>
+        <div class="btn-group">
+          <form @submit="makeDecision($event, 0)" report-submit>
+            <button formType="submit" class="negative-circle" size="mini" type="plain">
+              NO
+            </button>
+          </form>
+          <form @submit="makeDecision($event, 1)" report-submit>
+            <button formType="submit" class="primary-circle init-btn" size="mini" type="plain">
+              YES
+            </button>
+          </form>
+        </div>
+      </block>
+    </block>
+  </block>
 </template>
 <script>
-  import primarybtn from '@/components/doraemon_btn_primary'
-  import previousbtn from '@/components/previous'
-  import nextbtn from '@/components/next'
   export default {
-    props: ['currentIndex', 'decisionLength'],
-    components: {
-      previousbtn,
-      primarybtn,
-      nextbtn
+    mounted () {
+      this.hasOpenid = !!this.$store.state.openid
+      // this.$store.commit('setGlobalModal', {show: true, type: {name: 'shakeHint', content: 'shake'}})
     },
+    data () {
+      return {
+        hasOpenid: false
+      }
+    },
+    props: ['decisionList', 'decisionLength'],
     computed: {
       openid () {
         return this.$store.state.openid
@@ -27,31 +54,26 @@
       }
     },
     methods: {
-      previousOne () {
-        this.$emit('switch', -1)
-      },
-      nextOne () {
-        this.$emit('switch', 1)
-      },
-      onInit () {
+      onInit (e) {
+        this.$store.commit('saveFormId', e)
         if (this.logined) {
-          const url = '../create/main'
+          const url = '/pages/create/main'
           wx.navigateTo({ url })
         } else {
-          wx.reLaunch({url: '../login/main'})
+          wx.reLaunch({url: '/pages/login/main'})
+        }
+      },
+      makeDecision (e, index) {
+        if (index) {
+          wx.navigateTo({url: '/pages/create/main'})
+        } else {
+          this.$store.commit('setGlobalModal', {show: true, type: {name: 'shakeHint', content: 'shake'}})
         }
       }
     }
   }
 </script>
 <style lang="scss">
-  .btn-group{
-    .disabled{
-      opacity: 0;
-      display: inline-block;
-      width: 42px;
-      height: 39px;
-    }
-  }
+
 </style>
 

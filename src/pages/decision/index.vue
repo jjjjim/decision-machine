@@ -36,26 +36,35 @@ export default {
       openid: '',
       participated: false,
       isShowBackHome: false,
-      fromShake: false // 从摇一摇进入
+      clockArray: [],
+      loopDuration: 5000,
+      isShowLoading: true,
+      fromShake: false // 是否从摇一摇进入
     }
   },
   onLoad (options) {
     const scene = decodeURIComponent(options.scene)
+    this.clockArray = []
+    this.isShowLoading = true
     let id = Number(scene) > 0 ? scene : this.$root.$mp.query.id
     this.id = id
     this.isShowBackHome = this.$root.$mp.query.home
     this.fromShake = this.$root.$mp.query.shake
     this.openid = wx.getStorageSync('openid')
-    this.init()
   },
   onPullDownRefresh () {
     this.init()
   },
   onShow () {
     this.init()
+    this.loopGetDetail()
   },
   onUnload () {
     this.$store.commit('setInIndex', false)
+    for (let key of this.clockArray) {
+      clearInterval(key)
+    }
+    this.clockArray = []
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -217,8 +226,13 @@ export default {
         }
       )
     },
+    loopGetDetail () {
+      this.isShowLoading = false
+      const clock = setInterval(this.getDetail, this.loopDuration)
+      this.clockArray.push(clock)
+    },
     getDetail () {
-      if (!this.openid) {
+      if (!this.openid || !this.id) {
         return
       }
       const config = {
@@ -226,12 +240,16 @@ export default {
         q_id: this.id
       }
       this.participated = false
-      this.$store.commit('setGlobalModal', {show: true, type: {name: 'loading', content: '获取详情...'}})
+      if (this.isShowLoading) {
+        this.$store.commit('setGlobalModal', {show: true, type: {name: 'loading', content: '获取详情...'}})
+      }
       this.$http.post('question_detail', config).then(
         res => {
           const id = res.data && res.data.result && res.data.result.id
           if (id) {
-            this.$store.commit('setGlobalModal')
+            if (this.$store.state.globalModalConfig.type.name !== 'screensaver') {
+              this.$store.commit('setGlobalModal')
+            }
             this.decisionDetail = res.data.result
             this.isParticipated()
           } else {
@@ -255,7 +273,7 @@ export default {
     isParticipated () {
       const allMembers = this.decisionDetail.yes.concat(this.decisionDetail.no)
       for (let key of allMembers) {
-        if (key.id === this.userid) {
+        if (key && key.id === this.userid) {
           this.participated = true
         }
       }

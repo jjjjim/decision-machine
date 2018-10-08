@@ -1,24 +1,26 @@
 <template>
-  <div class="item" @click.stop="checkDetail(detail.id)">
-    <header>
-      <section class="info">
-        <span class="status" :class='resultClass'></span>
-        <span class="time">
-          <!-- {{ time }} 2018-09-01 10:23:23 -->
-          <!-- {{ state === 1 ? '进行中' : '已完成' }} -->
-          {{ result.text }}
-        </span>
+  <form @submit="checkDetail($event, detail.id)" report-submit>
+    <button formType="submit" class="item">
+      <header>
+        <section class="info">
+          <span class="status" :class='resultClass'></span>
+          <span class="time">
+            <!-- {{ time }} 2018-09-01 10:23:23 -->
+            <!-- {{ state === 1 ? '进行中' : '已完成' }} -->
+            {{ result.text }}
+          </span>
+        </section>
+        <section class="participate-number">
+          <span>
+            {{ wholeNumber }} 人已参与
+          </span>
+        </section>
+      </header>
+      <section class="content">
+        {{ detail.question }}
       </section>
-      <section class="participate-number">
-        <span>
-          {{ wholeNumber }} 人已参与
-        </span>
-      </section>
-    </header>
-    <section class="content">
-      {{ detail.question }}
-    </section>
-  </div>
+    </button>
+  </form>
 </template>
 <script>
   export default {
@@ -54,7 +56,8 @@
       }
     },
     methods: {
-      checkDetail (id) {
+      checkDetail (e, id) {
+        this.$store.commit('saveFormId', e)
         wx.navigateTo({url: `/pages/decision/main?id=${id}`})
       }
     }
@@ -63,6 +66,8 @@
 <style lang="scss" scoped>
   @import '../css/global.scss';
   .item{
+    width: 100%;
+    line-height: 1.5;
     font-family: 'fuck';
     background-color: #434343;
     padding: 12px;
