@@ -86,6 +86,7 @@ export default {
 
 <style lang="scss">
 @import './css/font.scss';
+@import './css/iconfont.scss';
 @import './css/buttons.scss';
 page{
   font-family: 'zcool-gdh';  

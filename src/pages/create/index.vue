@@ -57,7 +57,8 @@ export default {
     this.loopClock = null
   },
   methods: {
-    setPublic () {
+    setPublic (e) {
+      this.$store.commit('saveFormId', e)
       this.isPublic = !this.isPublic
     },
     toLaunchDecision (e) {

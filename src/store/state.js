@@ -16,7 +16,7 @@ export default {
   },
   text: {
     poster: ['http://ojrbqzf6q.qnssl.com/FoVSaBVoph86VQI4mU48MldcunJr.png'],
-    main_content: '善良的地球人会给你想要的答案',
+    main_content: '善良的地球人会帮你作决定',
     main_btn: '发送给好友',
     sec_btn: '发到朋友圈'
   },

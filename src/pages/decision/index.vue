@@ -109,7 +109,6 @@ export default {
   },
   methods: {
     async init () {
-      this.participated = false
       if (this.openid) {
         if (this.fromShake) {
           this.$store.commit('setInDecision', true)
@@ -281,6 +280,7 @@ export default {
     },
     isParticipated () {
       const allMembers = this.decisionDetail.yes.concat(this.decisionDetail.no)
+      this.participated = false
       for (let key of allMembers) {
         if (key && key.id === this.userid) {
           this.participated = true

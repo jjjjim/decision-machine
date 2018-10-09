@@ -39,7 +39,7 @@
       </li>
       <li>
         <ul class="avatars with-name" v-if="positiveResult.length <= 5">
-          <li v-for="(item, index) in positiveResult" :key="index" class="ellipsis">
+          <li v-for="(item, index) in positiveResult" :key="index" class="ellipsis" v-if="item">
             <span class="ellipsis">
               {{ item.name }}
             </span>
@@ -47,7 +47,7 @@
           </li>
         </ul>
         <ul class="avatars no-name" v-else>
-          <li v-for="(item, index) in positiveResult" :key="index" class="ellipsis">
+          <li v-for="(item, index) in positiveResult" :key="index" class="ellipsis" v-if="item">
             <img class="avatar" :src="item.avatar" alt="avatar">
           </li>
         </ul>
