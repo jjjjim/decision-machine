@@ -64,7 +64,7 @@
       </ul>
     </block>
     <block v-else>
-      <ul>
+      <ul class="comments">
         <li v-for="item in comments" :key="item.time">
           <section class="avatar">
             <img :src="item.avatar" alt="avatars">
@@ -79,7 +79,7 @@
     props: ['decisionDetail'],
     data () {
       return {
-        currentMode: 'score'
+        currentMode: 'comments'
       }
     },
     computed: {
