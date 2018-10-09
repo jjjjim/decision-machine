@@ -3,17 +3,6 @@
     <section class="content-zone">
       <decisioncontent :detail="detail" :createTime="createTime" :stateImg="stateImg" :avaliable="avaliable" v-if="createTime">
       </decisioncontent>
-      <!-- <div class="timeout" v-if="1 === 3 && !avaliable && !isHost && !participated">
-        <div class="header">
-          <img src="http://ojrbqzf6q.qnssl.com/Fta9bluMYJtPPHxR9dCWibc-s8Jd.svg" alt="timeout" class="timeout-icon">
-          <p class="title">
-            已结束
-          </p>
-        </div>
-        <p class="warning-content">
-          发起的决定会在被发起24小时后自动失效，你不能再参与此决定。
-        </p>
-      </div> -->
       <result :decisionDetail="detail" v-if="showResult">
       </result>
     </section>
@@ -108,6 +97,9 @@
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .content-zone{
     width: 100%;
     .author{
