@@ -22,7 +22,7 @@
           </form>       
           <form @submit="toPage($event, 'create')" report-submit>
             <button formType="submit" class="primary-circle init-btn" size="mini" type="plain">
-              发起决定
+              我也要发
             </button>
           </form>          
         </block>

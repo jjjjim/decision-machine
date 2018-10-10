@@ -30,10 +30,17 @@
         return this.detail && this.detail.add_time && this.detail.add_time.replace('T', ' ')
       },
       positiveResult () {
-        return (this.detail.yes) || []
+        const result = []
+        const yesList = this.detail.yes
+        result.length = Array.isArray(yesList) ? yesList.length : isNaN(yesList) ? 0 : yesList
+        return result
       },
       negativeResult () {
-        return (this.detail.no) || []
+        // return (this.detail.no) || []
+        const result = []
+        const noList = this.detail.no
+        result.length = Array.isArray(noList) ? noList.length : isNaN(noList) ? 0 : noList
+        return result
       },
       wholeNumber () {
         return this.positiveResult.length + this.negativeResult.length

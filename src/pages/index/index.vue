@@ -2,8 +2,20 @@
   <div class="container" :class='isFresh ? "fresh" : "old"'>
     <machine>
       <div slot="screen">
-        <indexcontent :decisionList="decisionList">
-        </indexcontent>
+        <!-- <indexcontent :decisionList="decisionList">
+        </indexcontent> -->
+        <swiper duration="400" :current="currentIndex" @change="onSwipe">
+          <block>
+            <swiper-item>
+              <indexcontent :decisionList="decisionList">
+              </indexcontent>
+            </swiper-item>
+            <swiper-item>
+              <indexcontent :decisionList="participedDecisionList" v-on:loadMore="getParticipedDecisionList" :noMoreData="noMoreData" :isInParticipedMode="isInParticipedMode">
+              </indexcontent>
+            </swiper-item>
+          </block>
+        </swiper>
       </div>
       <div slot="operate">
         <indexbtn :decisionList="decisionList">
@@ -22,25 +34,36 @@ export default {
     return {
       machine,
       decisionList: [],
+      participedDecisionList: [],
+      isLoading: false,
+      noMoreData: false,
+      offset: 0,
+      limit: 20,
       isFresh: false,
-      currentIndex: 0
+      currentIndex: 1
     }
   },
   mounted () {
     this.isFresh = !wx.getStorageSync('openid')
     this.setNavigationBar()
     this.$store.commit('setInIndex', true)
-    this.getDecisionList()
+    this.getMyDecisionList()
+    this.getParticipedDecisionList()
   },
   onShow () {
     this.$store.commit('setInIndex', true)
-    // this.getDecisionList()
+    // this.getMyDecisionList()
   },
   onHide () {
     this.$store.commit('setInIndex', false)
   },
   onPullDownRefresh () {
-    this.getDecisionList()
+    this.noMoreData = false
+    this.isLoading = false
+    this.offset = 0
+    this.participedDecisionList = []
+    this.getMyDecisionList()
+    this.getParticipedDecisionList()
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
@@ -59,6 +82,9 @@ export default {
     shake
   },
   computed: {
+    isInParticipedMode () {
+      return this.currentIndex === 1 // 是否在 我的参与 swiper下
+    },
     isShowDecisionList () {
       return this.decisionList.length
     },
@@ -109,7 +135,7 @@ export default {
         }
       })
     },
-    getDecisionList () {
+    getMyDecisionList () {
       if (this.openid) {
         this.$store.commit('setGlobalModal', {show: true, type: {name: 'loading', content: '获取已创建的决定...'}})
         this.$http.post('question_list', {open_id: this.openid}).then(
@@ -128,6 +154,37 @@ export default {
           }
         )
       }
+    },
+    getParticipedDecisionList () {
+      const config = {
+        offset: this.offset,
+        limit: this.limit,
+        open_id: this.openid
+      }
+      if (this.isLoading || this.noMoreData) {
+        return
+      }
+      this.isLoading = true
+      this.$http.post('get_participated_list', config).then(
+        res => {
+          const list = res.data && res.data.result
+          if (Array.isArray(list)) {
+            this.participedDecisionList.push(...list)
+            if (list.length) {
+              this.offset += this.limit
+            } else {
+              this.noMoreData = true
+            }
+          }
+        }
+      ).then(
+        () => {
+          this.isLoading = false
+        }
+      )
+    },
+    onSwipe (e) {
+      console.log(e.mp.detail.current)
     }
   }
 }
@@ -202,5 +259,8 @@ export default {
 }
 .contact{
   opacity: 0.5;
+}
+swiper{
+  height: 100%;
 }
 </style>

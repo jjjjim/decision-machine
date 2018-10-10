@@ -1,5 +1,5 @@
 <template>
-  <scroll-view scroll-y class="decion-items" @scroll="delayScreenSaver">
+  <scroll-view scroll-y class="decion-items" @scroll="delayScreenSaver" @scrolltolower="loadData" lower-threshold="40">
     <div class="pulldown-refresh tips" :animation="tipAnimation" v-if="isRealShowPrompt">
       <form @submit="switchShowPrompt" report-submit>
         <button formType="submit">
@@ -34,6 +34,10 @@
         </item>
       </li>
     </ul>
+    <!-- {{ noMoreData }}, {{ isIn }} -->
+    <p class="no-more-data" v-if="noMoreData && isInParticipedMode">
+      数据已加载完毕
+    </p>
   </scroll-view>
 </template>
 <script>
@@ -46,13 +50,12 @@
         isRealShowPrompt: false
       }
     },
-
     created () {
       setTimeout(() => {
         this.switchShowPrompt()
       }, 1200)
     },
-    props: ['items'],
+    props: ['items', 'noMoreData', 'isInParticipedMode'],
     components: {
       item
     },
@@ -60,7 +63,8 @@
       delayScreenSaver () {
         this.$store.commit('setScreenSaverClock')
       },
-      closePrompt () {
+      loadData () {
+        this.$emit('loadMore')
       },
       switchShowPrompt (e) {
         const animationTime = 300
@@ -154,6 +158,12 @@
           margin-bottom: 10px;
         }
       }
+    }
+    .no-more-data{
+      margin-top: 10px;
+      font-family: 'fuck';
+      font-size: 11px;
+      opacity: 0.6;
     }
   }
 </style>

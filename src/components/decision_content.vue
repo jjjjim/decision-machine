@@ -1,26 +1,27 @@
 <template>
-  <div>
-    <div class="author">
-      <div class="launch-info">
+  <div class="wrapper">
+    <div class="inner">
+      <div class="author-avatar">
         <img class="avatar" :src="detail.creator_avatar" alt="avatar">
-        <div class="info ellipsis">
-          <p class="nickname ellipsis">
-            {{ detail.creator_name }}
-          </p>
-          <div class="time" v-if="detail.add_time">
-            <span>
-              {{ createTime }}
-            </span>
-          </div>
-        </div>
       </div>
-      <div class="state">
-        <img :src="stateImg" alt="state">
+      <p class="nickname ellipsis">
+        {{ detail.creator_name }}
+      </p>
+      <p class="content" :class='avaliable ? "" : "disable"'>
+        {{ detail.question }}
+      </p>
+      <div class="time" v-if="detail.add_time">
+        <span class="text">
+          于
+        </span>
+        <span class="create-time">
+          {{ createTime }}
+        </span>
+        <span class="text">
+          发起
+        </span>
       </div>
     </div>
-    <p class="content" :class='avaliable ? "" : "disable"'>
-      {{ detail.question }}
-    </p>
   </div>
 </template>
 <script>
@@ -29,59 +30,49 @@
   }
 </script>
 <style lang="scss" scoped>
-.author{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .launch-info{
-    display: flex;
-    justify-content: flex-start;
-    width: calc(100% - 60px);
-    padding-right: 5px;
-    box-sizing: border-box;
-    .avatar{
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      box-sizing: border-box;
-      border: 3px solid #fff;
-    }
-    .info{
-      flex: 1;
-      text-align: left;
-      font-family: 'fuck';
-      margin-left: 10px;
-      .nickname{
-        font-size: 18px;
-      }
-      .time{
-        font-size: 12px;
-        color: #9b9b9b;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
-  }
-  .state{
-    font-size: 0;
-    width: 60px;
-    img{
-      width: 60px;
-      height: 22px;
-    }
-  }
-}
-.content{
-  width: 100%;
-  margin-top: 20px;
-  font-size: 15px;
+.wrapper{
+  border-radius: 4px;
   font-family: 'fuck';
-  white-space: pre-wrap;
-  text-align: left;
-  &.disable{
-    text-decoration: line-through;
-    color: #9b9b9b;
+  .inner{
+    position: relative;
+    padding: 10px;
+    .author-avatar{
+      text-align: center;
+      .avatar{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: 3px solid #fff
+      }
+    }
+    .nickname{
+      font-size: 10px;
+      margin-top: 5px;
+      font-weight: bold;
+      opacity: 0.2;    
+    }
+    .content{
+      width: 100%;
+      font-size: 18px;
+      font-family: 'fuck';
+      white-space: pre-wrap;
+      text-align: center;
+      margin: 10px 0;
+      &.disable{
+        text-decoration: line-through;
+        color: #9b9b9b;
+      }
+    }
+    .time{
+      text-align: center;
+      font-size: 10px;
+      opacity: 0.2;
+      .text{
+        margin: 0 3px;
+      }
+    }
   }
+
 }
 </style>

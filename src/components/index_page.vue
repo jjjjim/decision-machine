@@ -1,8 +1,10 @@
 <template>
   <block>
     <block>
-      <decisionitems :items="decisionList" v-if="decisionList.length">
-      </decisionitems>
+      <block v-if="!decisionList.length">
+        <decisionitems :items="decisionList" v-on:loadMore="loadMore" :noMoreData="noMoreData" :isInParticipedMode="isInParticipedMode">
+        </decisionitems>
+      </block>
       <block v-else>
         <ul class="welcome-introduce" v-if="!hasOpenid">
           <li>
@@ -77,7 +79,7 @@
         avaliable: true
       }
     },
-    props: ['decisionList'],
+    props: ['decisionList', 'noMoreData', 'isInParticipedMode'],
     computed: {
       user () {
         return this.$store.state.user
@@ -86,6 +88,11 @@
     components: {
       decisioncontent,
       decisionitems
+    },
+    methods: {
+      loadMore () {
+        this.$emit('loadMore')
+      }
     }
   }
 </script>
@@ -102,6 +109,9 @@
     color: #ffffff;
     transform: scaleY(1);
   }
+}
+.no-more-data{
+  
 }
 .welcome-introduce{
   font-size: 16px;
