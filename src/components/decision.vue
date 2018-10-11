@@ -189,15 +189,16 @@
     padding-top: 10px;
     position: relative;
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 40px;
     &::after{
       content: "";
       position: absolute;
-      width: 100%;
+      width: 90%;
       height: 1px;
-      left: 0;
+      left: 10%;
       top: 0;
       background-color: #9b9b9b;
+      opacity: 0.2;
       transform: scaleY(0.5);
     }
   }

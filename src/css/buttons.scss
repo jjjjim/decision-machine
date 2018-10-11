@@ -11,6 +11,7 @@
   &::after{
     border: none;
   }
+  outline: none;
 }
 button{
   @extend .custom-btn;
@@ -20,11 +21,11 @@ button{
   &.primary{
     background-image: url(http://ojrbqzf6q.qnssl.com/Fm2C91maCnasPDaA5JB3J9nK7xZB.svg);
     width: 170.71px;
-    height: 65px;
+    height: 60px;
     line-height: 50px;
-    margin-top: 10px;
+    // margin-top: 10px;
     padding: 0;
-    font-size: 14px;
+    font-size: 15px;
     &.no-margin{
       margin-top: 0;
     }

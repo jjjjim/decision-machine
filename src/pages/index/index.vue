@@ -18,17 +18,21 @@
         </swiper>
       </div>
       <div slot="operate">
-        <indexbtn :decisionList="decisionList">
+        <indexbtn :decisionList="decisionList" :isInParticipedMode="isInParticipedMode">
         </indexbtn>
       </div>
     </machine>
+    <div class="is-loading" v-if="isLoading">
+      <loading> 
+      </loading>
+    </div>
   </div>
 </template>
 <script>
 import machine from '@/components/machine'
 import indexcontent from '@/components/index_page'
 import indexbtn from '@/components/index_btn_group'
-import shake from '@/components/shake'
+import loading from '@/components/loading'
 export default {
   data () {
     return {
@@ -40,7 +44,7 @@ export default {
       offset: 0,
       limit: 20,
       isFresh: false,
-      currentIndex: 1
+      currentIndex: 0
     }
   },
   mounted () {
@@ -79,7 +83,7 @@ export default {
     machine,
     indexcontent,
     indexbtn,
-    shake
+    loading
   },
   computed: {
     isInParticipedMode () {
@@ -161,10 +165,12 @@ export default {
         limit: this.limit,
         open_id: this.openid
       }
-      if (this.isLoading || this.noMoreData) {
+      if (this.isLoading || this.noMoreData || !this.openid) {
         return
       }
-      this.isLoading = true
+      if (this.offset > 0) {
+        this.isLoading = true
+      }
       this.$http.post('get_participated_list', config).then(
         res => {
           const list = res.data && res.data.result
@@ -184,7 +190,7 @@ export default {
       )
     },
     onSwipe (e) {
-      console.log(e.mp.detail.current)
+      this.currentIndex = e.mp.detail.current
     }
   }
 }
@@ -233,6 +239,9 @@ export default {
 }
 .container{
   height: 100vh;
+  swiper{
+    height: 100%;
+  }
   &.old{
     background-color: #ffffff;    
   }
@@ -251,6 +260,9 @@ export default {
     .init-btn{
       animation-delay: 10s;
     }
+    .contact{
+      animation-delay: 10s;      
+    }
   }
 }
 .init-btn{
@@ -258,9 +270,14 @@ export default {
   animation: btn .3s forwards;
 }
 .contact{
-  opacity: 0.5;
+  animation: btn .3s forwards;
+  opacity: 0;
 }
-swiper{
-  height: 100%;
+.is-loading{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
 }
 </style>

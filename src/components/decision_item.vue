@@ -36,7 +36,6 @@
         return result
       },
       negativeResult () {
-        // return (this.detail.no) || []
         const result = []
         const noList = this.detail.no
         result.length = Array.isArray(noList) ? noList.length : isNaN(noList) ? 0 : noList
@@ -76,7 +75,7 @@
     width: 100%;
     line-height: 1.5;
     font-family: 'fuck';
-    background-color: #434343;
+    background-color: darken(#433f3f, 2%);
     padding: 12px;
     header{
       display: flex;

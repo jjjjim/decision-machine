@@ -1,32 +1,32 @@
 <template>
-  <scroll-view scroll-y class="decion-items" @scroll="delayScreenSaver" @scrolltolower="loadData" lower-threshold="40">
-    <div class="pulldown-refresh tips" :animation="tipAnimation" v-if="isRealShowPrompt">
-      <form @submit="switchShowPrompt" report-submit>
-        <button formType="submit">
-          <section class="header">
-            <span class="prompt">
-              提示：
-            </span>
-            <span class="iconfont icon-times-circle"></span>
-          </section>
-          <section class="item">
-            <span class="index">
-              1.
-            </span>
-            <span class="content">
-              摇一摇，看看别人在纠结什么决定
-            </span>
-          </section>
-          <section class="item">
-            <span class="index">
-              2.
-            </span>
-            <span class="content">
-              按住“决定决定机”的右侧边框下拉刷新
-            </span>
-          </section>
-        </button>
-      </form>
+  <scroll-view scroll-y class="decion-items" @scroll="delayScreenSaver" @scrolltolower="loadData" lower-threshold="20">
+    <div class="tips" :animation="tipAnimation" v-if="!isInParticipedMode && isRealShowPrompt">
+      <section class="img">
+        <img src="http://ojrbqzf6q.qnssl.com/Fnc_F4k6VKAaWQFJQF6JM7Gtn3_w.svgz" class="pull-down" alt="pulldown">
+      </section>
+      <section class="content">
+        <p>
+          按住“决定决定机”的右侧边框下拉刷新
+        </p>
+        <form @submit="switchShowPrompt" report-submit>
+          <button formType="submit">
+            我知道了
+          </button>
+        </form>        
+      </section>
+    </div>
+    <div class="tips shake" v-if="isInParticipedMode">
+      <section class="img">
+        <img src="http://ojrbqzf6q.qnssl.com/FrGl339h1KbpW5C_jmRf8KchArFX.svgz" class="shake" alt="shake">
+      </section>
+      <section class="shake content">
+        <p class="title">
+          我参与过的决定
+        </p>
+        <p class="value">
+          摇一摇，参与别人的决定
+        </p>
+      </section>
     </div>
     <ul>
       <li v-for="(item, index) in items" :key="index">
@@ -37,6 +37,9 @@
     <!-- {{ noMoreData }}, {{ isIn }} -->
     <p class="no-more-data" v-if="noMoreData && isInParticipedMode">
       数据已加载完毕
+    </p>
+    <p class="to-my-particeiped-page-hint" v-if="!isInParticipedMode">
+      左滑这里进入“我参与过的决定”页面
     </p>
   </scroll-view>
 </template>
@@ -51,9 +54,7 @@
       }
     },
     created () {
-      setTimeout(() => {
-        this.switchShowPrompt()
-      }, 1200)
+      this.switchShowPrompt()
     },
     props: ['items', 'noMoreData', 'isInParticipedMode'],
     components: {
@@ -95,22 +96,77 @@
   }
 </script>
 <style lang="scss" scoped>
+  @import '../css/global.scss';
   .decion-items{
     height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
     .tips{
       font-family: 'fuck';
       background-color: #3d3a3a;
       margin-bottom: 10px;
       border-radius: 5px;
       box-shadow: -4px 6px 8px rgab(0, 0, 0, 0.16);
-      transform: translateY(-30);
-      opacity: 0;
-      button{
-        width: 100%;
-        font-size: 11px;
-        padding: 12px;
-        line-height: 1.5;
+      // transform: translateY(-30);
+      // opacity: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      font-size: 0;
+      &.shake{
+        justify-content: center;
       }
+      .img{
+        .pull-down{
+          width: 100px;
+          height: 116px;
+        }
+        .shake{
+          width: 60px;
+          height: 60px;
+        }
+      }
+      .content{
+        text-align: left;
+        padding: 16px 0;
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        &.shake{
+          margin-left: 10px;
+        }
+        p{
+          margin-bottom: 10px;
+          font-size: 12px;
+          text-align: left;
+          line-height: 1.7;
+        }
+        &.shake{
+          .title{
+            font-size: 10px;
+            opacity: 0.5;
+            margin-bottom: 6px;
+          }
+          .value{
+            margin-bottom: 0;
+          }
+        }
+        button{
+          width: 80px;
+          height: 24px;
+          line-height: 24px;
+          text-align: center;
+          border-radius: 12px;
+          background-color: $primary;
+          padding: 0;
+          color: #fff;
+          font-size: 12px;
+          // display: none;
+        }
+      }
+
       .header{
         display: flex;
         align-items: center;
@@ -155,15 +211,15 @@
     ul{
       li{
         &:not(:last-child){
-          margin-bottom: 10px;
+          margin-bottom: 15px;
         }
       }
     }
-    .no-more-data{
+    .no-more-data, .to-my-particeiped-page-hint{
       margin-top: 10px;
       font-family: 'fuck';
-      font-size: 11px;
-      opacity: 0.6;
+      font-size: 10px;
+      opacity: 0.5;
     }
   }
 </style>

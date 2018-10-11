@@ -1,7 +1,7 @@
 <template>
   <block>
     <block>
-      <block v-if="!decisionList.length">
+      <block v-if="decisionList.length">
         <decisionitems :items="decisionList" v-on:loadMore="loadMore" :noMoreData="noMoreData" :isInParticipedMode="isInParticipedMode">
         </decisionitems>
       </block>
@@ -29,7 +29,7 @@
           </li>
           <li>
             <p>
-              求助好友，帮你下定决心，作出决定。
+              帮你下定决心，作出决定。
             </p>
           </li>
           <li>
@@ -38,15 +38,19 @@
             </p>
           </li>
         </ul>
-        <div class="teach-fresh-user" v-else>
-          <decisioncontent :detail="detail" :createTime="createTime" :stateImg="stateImg" :avaliable="avaliable">
-          </decisioncontent>
-          <div class="hint">
-            <p>
-              点击下方按钮，帮我做决定
-            </p>
+        <block v-else>
+          <shake v-if="isInParticipedMode">
+          </shake>
+          <div class="teach-fresh-user" v-else>
+            <decisioncontent :detail="detail" :createTime="createTime" :stateImg="stateImg" :avaliable="avaliable">
+            </decisioncontent>
+            <div class="hint">
+              <p>
+                左滑这里参与别人的决定
+              </p>
+            </div>
           </div>
-        </div>
+        </block>
       </block>
     </block>
   </block>
@@ -55,6 +59,7 @@
   import decisioncontent from '@/components/decision_content'
   import decisionitems from '@/components/decision_items'
   import avaliableImg from '@/images/decisionavaliable.svg'
+  import shake from '@/components/shake'
 
   export default {
     mounted () {
@@ -87,7 +92,8 @@
     },
     components: {
       decisioncontent,
-      decisionitems
+      decisionitems,
+      shake
     },
     methods: {
       loadMore () {
@@ -109,9 +115,6 @@
     color: #ffffff;
     transform: scaleY(1);
   }
-}
-.no-more-data{
-  
 }
 .welcome-introduce{
   font-size: 16px;

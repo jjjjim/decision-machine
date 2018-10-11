@@ -56,15 +56,18 @@ export default {
               const randomDecision = res.data && res.data.result
               /* eslint-disable */
               this.$store.commit('setGlobalModal')
-              if (randomDecision.id && randomDecision.state === 1) {
-                if (inIndex) {
-                  wx.navigateTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
-                } else if (inDecision) {
-                  this.$store.commit('updateRandomId', randomDecision.id)
-                }
-                // wx.redirectTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
+              if(randomDecision) {
+                if (randomDecision.id && randomDecision.state === 1) {
+                  if (inIndex) {
+                    wx.navigateTo({url: `/pages/decision/main?id=${randomDecision.id}&shake=1`})
+                  } else if (inDecision) {
+                    this.$store.commit('updateRandomId', randomDecision.id)
+                  }
+                } else {
+                  this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取数据出错，请再试一次。'}})                  
+                } 
               } else {
-                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '获取到的决定已失效，请再试一次吧。'}})
+                this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '你已参与所有的决定。'}})
               }
             },
             error => {

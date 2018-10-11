@@ -1,42 +1,50 @@
 <template>
-  <div class="shake-get-random-decision">
-    <section class="inner">
-      <img src="http://ojrbqzf6q.qnssl.com/FrGl339h1KbpW5C_jmRf8KchArFX.svgz" alt="shake">
-      <section class="text">
-        <p class="title">
-          摇一摇
-        </p>
-        <p class="hint">
-          看看别人在纠结什么决定
-        </p>
+  <div class="shake-hint">
+    <div>
+      <section class="wrapper">
+        <img src="http://ojrbqzf6q.qnssl.com/FoJiyZfqYSCWBx5rR8Ys-5Ydxv0x.svgz" alt="shake">
       </section>
-    </section>
+      <p class="title">
+        摇一摇
+      </p>
+      <p class="value">
+        看看别人在纠结什么决定
+      </p>
+    </div>
   </div>
 </template>
+<script>
+</script>
 <style lang="scss" scoped>
-  .shake-get-random-decision{
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: darken(#423f3f, 2%);
-    .inner{
-      display: flex;
-      align-items: center;
-      img{
-        width: 30px;
-        height: 30px;
-      }
-      .text{
-        margin-left: 10px;
-        text-align: left;
-        .title{
-          font-size: 18px;
-        }
-        .hint{
-          font-size: 15px;
-          opacity: .7;
-        }
-      }
+.shake-hint{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  & > div{
+    width: 100%;
+  }
+  .wrapper{
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    img{
+      width: 60px;
+      height: 60px;
     }
   }
+  .title{
+    margin-top: 30px;
+    font-size: 20px;
+  }
+  .value{
+    font-size: 15px;
+    opacity: 0.6;
+  }
+}
 </style>

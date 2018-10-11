@@ -1,6 +1,6 @@
 <template>
   <div class="decision-result" v-if="showResult">
-    <div class="teach-result-switch" v-if="isRealShowPrompt" :animation="tipAnimation">
+    <div class="teach-result-switch" v-if="1===3 && isRealShowPrompt" :animation="tipAnimation">
       <p>
         点击下方按钮切换结果或评论
       </p>
@@ -82,8 +82,9 @@
         <section class="new-comment">
           <input type="text" v-model.trim="commentContent" placeholder="输入评论内容" @input="delayScreenSaver">
           <form @submit="addComment" report-submit>        
-            <button formType="submit">
-              <span class="icon-paper-plane"></span>
+            <button formType="submit" :disabled="isLoading">
+              <span class="loading icon-spinner" v-if="isLoading"></span>            
+              <span class="icon-paper-plane" v-else></span>
             </button>
           </form>        
         </section>
@@ -117,9 +118,7 @@
   import commenttime from '@/components/comment_time'
   export default {
     mounted () {
-      setTimeout(() => {
-        this.switchShowPrompt()
-      }, 2000)
+      // this.switchShowPrompt()
     },
     props: ['decisionDetail'],
     data () {
@@ -127,6 +126,7 @@
         currentMode: 'score',
         commentContent: '',
         isShowPrompt: false,
+        isLoading: false,
         isRealShowPrompt: false,
         tipAnimation: {}
       }
@@ -220,11 +220,12 @@
         this.$store.commit('setScreenSaverClock')
       },
       addComment (e) {
+        this.$store.commit('saveFormId', e)
         const comment = this.commentContent
         const qID = this.$root.$mp.query.id
         const openid = this.openid
-        this.$store.commit('saveFormId', e)
         if (comment && qID && openid) {
+          this.isLoading = true
           const config = {
             open_id: openid,
             q_id: qID,
@@ -232,7 +233,6 @@
           }
           this.$http.post('add_comment', config).then(
             res => {
-              console.log(res)
               this.commentContent = ''
               this.$store.commit('updateRandomId', qID)
             },
@@ -240,6 +240,10 @@
               if (error) {
                 this.$store.commit('setGlobalModal', {show: true, type: {name: 'errorMsg', content: '评论失败'}})
               }
+            }
+          ).then(
+            () => {
+              this.isLoading = false
             }
           )
         }

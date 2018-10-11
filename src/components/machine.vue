@@ -31,13 +31,13 @@
             <section>
               <img :src="loadingImg" alt="loading">
               <p>
-                正在随机获取已公开的决定...
+                正在随机获取一条决定...
               </p>              
             </section>
           </div>
           <div class="screen-saver" :style="wallPaper" v-if="isShowScreenSaver">
           </div>
-          <div class="shake-hint" v-if="isShowCanShake">
+          <!-- <div class="shake-hint" 
             <div>
               <section class="wrapper">
                 <img src="http://ojrbqzf6q.qnssl.com/FoJiyZfqYSCWBx5rR8Ys-5Ydxv0x.svgz" alt="shake">
@@ -49,7 +49,9 @@
                 看看别人在纠结什么决定
               </p>
             </div>
-          </div>
+          </div> -->
+          <shake v-if="isShowCanShake">
+          </shake>
           <div class="how-to-use" v-if="isShowHowToUseModal">
             <p>
               总有那么些艰难的决定让我们犹豫不决，心乱如麻。使用这台机器，快速征集好友的看法。
@@ -109,7 +111,7 @@
   import fingerprintImg from '@/images/fingerprint.svg'
   import loadingImg from '@/images/loading.svg'
   import lightImg from '@/images/light.svg'
-
+  import shake from '@/components/shake'
   export default {
     data () {
       return {
@@ -124,6 +126,9 @@
     },
     mounted () {
       this.showScreenSaver()
+    },
+    components: {
+      shake
     },
     computed: {
       user () {
@@ -353,14 +358,14 @@
       }
     }
     .get-random-decision{
-        padding-top: 50px;
-        img{
-          @extend .loadingicon;
-        }
-        p{
-          margin-top: 20px;
-          font-size: 15px;
-        }
+      padding-top: 50px;
+      img{
+        @extend .loadingicon;
+      }
+      p{
+        margin-top: 20px;
+        font-size: 15px;
+      }
     }
     .screen-saver{
       height: 100%;
@@ -368,37 +373,6 @@
       background-position: center;
       background-repeat: no-repeat;
       animation: btn .5s;
-    }
-    .shake-hint{
-      height: 100%;
-      display: flex;
-      align-items: center;
-      & > div{
-        width: 100%;
-      }
-      .wrapper{
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        border-radius: 50%;
-        background-color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        img{
-          width: 60px;
-          height: 60px;
-        }
-      }
-      .title{
-        margin-top: 30px;
-        font-size: 20px;
-      }
-      .value{
-        font-size: 15px;
-        opacity: 0.6;
-      }
     }
     .share-as-img{
       text-align: left;
