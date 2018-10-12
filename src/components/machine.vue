@@ -31,7 +31,7 @@
             <section>
               <img :src="loadingImg" alt="loading">
               <p>
-                正在随机获取一条决定...
+                正在随机获取决定...
               </p>              
             </section>
           </div>
@@ -107,7 +107,7 @@
   </section>
 </template>
 <script>
-  import machine from '@/images/machinev2.svg'
+  import machine from '@/images/machinev3.svg'
   import fingerprintImg from '@/images/fingerprint.svg'
   import loadingImg from '@/images/loading.svg'
   import lightImg from '@/images/light.svg'

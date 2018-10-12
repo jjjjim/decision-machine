@@ -15,7 +15,7 @@
         </form>        
       </section>
     </div>
-    <div class="tips shake" v-if="isInParticipedMode">
+    <!-- <div class="tips shake" v-if="isInParticipedMode">
       <section class="img">
         <img src="http://ojrbqzf6q.qnssl.com/FrGl339h1KbpW5C_jmRf8KchArFX.svgz" class="shake" alt="shake">
       </section>
@@ -27,7 +27,7 @@
           摇一摇，参与别人的决定
         </p>
       </section>
-    </div>
+    </div> -->
     <ul>
       <li v-for="(item, index) in items" :key="index">
         <item :detail="item">

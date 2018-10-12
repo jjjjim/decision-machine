@@ -43,7 +43,8 @@ export default {
   },
   saveFormId (state, e) {
     const id = e.mp.detail.formId
-    if (!isNaN(id)) {
+    console.log(id, typeof id)
+    if (!id.includes('mock')) {
       fly.post('save_formId', {open_id: state.openid, form_id: id}).then(
         res => {
         }
