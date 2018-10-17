@@ -19,8 +19,8 @@
 <script>
 import machine from '@/components/machine'
 import decision from '@/components/decision'
-import shareImgTemplate from '@/images/share-img2.png'
-import border from '@/images/border2.png'
+import shareImgTemplate from '@/images/share-img.png'
+import border from '@/images/border.png'
 import decisionbtngroup from '@/components/decision_btn_group'
 /* eslint-disable-next-line */
 const regeneratorRuntime = require('../../../static/regenerator-runtime/runtime.js')
@@ -319,7 +319,7 @@ export default {
         {
           type: 'text',
           content: this.decisionDetail.question,
-          color: '#403c39',
+          color: '#ffffff',
           top: 158,
           left: 46,
           width: 263,
@@ -338,7 +338,7 @@ export default {
         },
         {
           type: 'image',
-          url: `https://m.niucodata.com/pic.php?pic=http://pfdn803m2.bkt.clouddn.com/FsgArcagKVeold2BWGnT4K9yMcOH.png`,
+          url: `https://m.niucodata.com/pic.php?pic=http://ojrbqzf6q.qnssl.com/FjknvtaD51MnxcczZJkWHph2i2-n.png`,
           top: 60,
           left: 148,
           width: 80,
@@ -347,7 +347,6 @@ export default {
         {
           type: 'image',
           url: `https://box.niucodata.com/token/jdjdj_qr/${this.id}`,
-          // url: `https://m.niucodata.com/pic.php?pic=${this.user.avatarUrl}`,
           top: 298,
           left: 140,
           width: 94,

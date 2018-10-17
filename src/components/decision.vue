@@ -6,17 +6,19 @@
       <result :decisionDetail="detail" v-if="showResult">
       </result>
     </section>
-    <div class="hint" v-if="showHint">
+    <div class="hint" v-if="showHint && !wholeNumber && isHost">
       <block>
         <p v-if="!wholeNumber && isHost">
           {{ text.main_content }}
         </p>
-        <p v-if="!isHost && !participated">
-          点击下方按钮，帮我做决定       
-        </p>
-        <p v-if="!isHost && participated">
-          已参与此决定
-        </p>
+        <block v-if="1===3">
+          <p v-if="!isHost && !participated">
+            点击下方按钮，帮我做决定       
+          </p>
+          <p v-if="!isHost && participated">
+            已参与此决定
+          </p>
+        </block>
       </block>
     </div>
   </scroll-view>
@@ -189,7 +191,7 @@
     padding-top: 10px;
     position: relative;
     font-size: 14px;
-    margin-top: 40px;
+    opacity: 0.2;
     &::after{
       content: "";
       position: absolute;
@@ -198,7 +200,7 @@
       left: 10%;
       top: 0;
       background-color: #9b9b9b;
-      opacity: 0.2;
+      // opacity: 0.2;
       transform: scaleY(0.5);
     }
   }
